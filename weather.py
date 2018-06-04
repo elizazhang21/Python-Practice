@@ -1,4 +1,4 @@
-# 查询天气
+# scrape weather information
 # -*- coding: utf-8 -*-
 __author__ = 'ElizabethZhang'
 
@@ -20,7 +20,7 @@ class weatherSaxHandler(object): #Sax=Simple API for XML
     def char_data(self,text):
         pass
 
-def parse_weather(xml): # 输入xml字符串，输出天气信息dict
+def parse_weather(xml): 
     parser = ParserCreate()
     handler = weatherSaxHandler()
     parser.StartElementHandler = handler.start_element
@@ -45,7 +45,7 @@ def parse_weather(xml): # 输入xml字符串，输出天气信息dict
     weather.update(d)
     return weather
 
-def get_weather(city): # 输入城市名（拼音）字符串，输出天气dict
+def get_weather(city):
     baseurl = "https://query.yahooapis.com/v1/public/yql?"
     yql_query = 'select * from weather.forecast where woeid in (select woeid from geo.places(1) where text="%s")' % city
     yql_url = baseurl + urllib.parse.urlencode({'q':yql_query})
